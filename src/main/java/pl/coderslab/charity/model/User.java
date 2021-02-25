@@ -1,5 +1,8 @@
 package pl.coderslab.charity.model;
 
+import org.springframework.validation.annotation.Validated;
+import pl.coderslab.charity.validation.EmailValidation;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -10,33 +13,42 @@ import java.util.Set;
 @Entity
 public class User {
 
+    public interface addUser { };
+
+    public interface editUser { };
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Proszę uzupełnić imię!")
+    @NotBlank(message = "Proszę uzupełnić imię!", groups = {addUser.class, editUser.class})
     private String firstName;
 
-    @NotBlank(message = "Proszę uzupełnić nazwisko!")
+    @NotBlank(message = "Proszę uzupełnić nazwisko!", groups = {addUser.class, editUser.class})
     private String lastName;
 
-    @NotBlank(message = "Proszę uzupełnić email!")
-    @Email
+    @NotBlank(message = "Proszę uzupełnić email!", groups = {addUser.class, editUser.class})
+    @Email(message = "Proszę wpisać maila w formacie 'sample@sample.pl'", groups = {addUser.class, editUser.class})
+    @EmailValidation(message = "Podany mail jest już zajęty, proszę wybrać inny!", groups = {addUser.class})
     private String email;
 
-    @NotBlank (message = "Proszę uzupełnić hasło!")
+    @NotBlank (message = "Proszę uzupełnić hasło!" , groups = {addUser.class, editUser.class})
     @Pattern(regexp = "(^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$)",
-            message = "Hasło musi zawierać: jedną cyfer, jedną dużą i jedną małą literę oraz znak specialny ")
+            message = "Hasło musi zawierać: jedną cyfer, jedną dużą i jedną małą literę oraz znak specialny ",
+            groups = {addUser.class, editUser.class})
     private String password;
 
     @OneToMany(mappedBy = "user")
     private Set<Donation> donations = new HashSet<>();
 
-    private int enabled;
+    private boolean enabled;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
     @JoinTable (name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
 
     public Long getId() {
         return id;
@@ -82,11 +94,11 @@ public class User {
         this.password = password;
     }
 
-    public int getEnabled() {
+    public boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(int enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -105,4 +117,6 @@ public class User {
     public void setDonations(Set<Donation> donations) {
         this.donations = donations;
     }
+
+
 }

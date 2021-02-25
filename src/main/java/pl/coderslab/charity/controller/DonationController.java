@@ -29,7 +29,7 @@ public class DonationController {
         this.donationService = donationService;
     }
 
-    @ModelAttribute("adminFullName")
+    @ModelAttribute("userFullName")
     public String adminName(@AuthenticationPrincipal CurrentUser currentUser){
         if(currentUser == null) {
             return "";
@@ -89,13 +89,19 @@ public class DonationController {
     @GetMapping("/recived")
     public String recived(@RequestParam Long id) {
         donationService.recived(id);
-        return "redirect:/admin/";
+        return "redirect:/user/";
     }
 
     @GetMapping("/unclimed")
     public String unclimed(@RequestParam Long id) {
         donationService.unclimed(id);
-        return "redirect:/admin/";
+        return "redirect:/user/";
+    }
+
+    @GetMapping("/details")
+    public String details(@RequestParam Long id, Model model) {
+        model.addAttribute("donation", donationService.findById(id));
+        return "user/donationDetails";
     }
 
 

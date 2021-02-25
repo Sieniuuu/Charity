@@ -45,6 +45,7 @@
                     </c:forEach>
                 </table>
             </div>
+            <span class="error-text">${empty error ? " " : error }</span>
         </div>
     </div>
 </div>

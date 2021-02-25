@@ -4,10 +4,13 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.charity.model.CurrentUser;
+import pl.coderslab.charity.model.Donation;
 import pl.coderslab.charity.model.User;
 import pl.coderslab.charity.service.DonationService;
+import pl.coderslab.charity.service.DonationSortService;
 import pl.coderslab.charity.service.PageUserService;
 
 import javax.validation.Valid;
@@ -17,11 +20,11 @@ import javax.validation.Valid;
 public class UserController {
 
     private final PageUserService pageUserService;
-    private final DonationService donationService;
+    private final DonationSortService donationSortService;
 
-    public UserController(PageUserService pageUserService, DonationService donationService) {
+    public UserController(PageUserService pageUserService, DonationSortService donationSortService) {
         this.pageUserService = pageUserService;
-        this.donationService = donationService;
+        this.donationSortService = donationSortService;
     }
 
     @ModelAttribute("userFullName")
@@ -30,8 +33,9 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public String userHome (@AuthenticationPrincipal CurrentUser currentUser, Model model) {
-        model.addAttribute("donations", donationService.findAllByUserRevers(currentUser.getUser()));
+    public String userHome (@AuthenticationPrincipal CurrentUser currentUser,
+                            @RequestParam(required = false) String searchMode, Model model) {
+        model.addAttribute("donations", donationSortService.executeQuery(searchMode, currentUser.getUser()));
         return "user/main";
     }
 
@@ -42,7 +46,8 @@ public class UserController {
     }
 
     @PostMapping("/editDetails")
-    public String editUserDetails(@ModelAttribute @Valid User user, BindingResult result) {
+    public String editUserDetails(@ModelAttribute @Validated({User.editUser.class}) User user, BindingResult result, @RequestParam String email,
+                                  @AuthenticationPrincipal CurrentUser currentUser, Model model) {
         if (result.hasErrors()) {
             return "user/edit";
         }
@@ -57,7 +62,7 @@ public class UserController {
     }
 
     @PostMapping("/editPassword")
-    public String createDonation(@ModelAttribute @Valid User user, BindingResult result,
+    public String createDonation(@ModelAttribute @Validated({User.editUser.class}) User user, BindingResult result,
                                  @RequestParam String confirmPassword, Model model){
         if(result.hasErrors()){
             return "user/editPassword";
@@ -67,6 +72,21 @@ public class UserController {
         } else {
             pageUserService.commitPasswordEdit(user);
         }
+        return "redirect:/user/";
+    }
+
+    @GetMapping("/editEmail")
+    public String editEmailForm(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
+        model.addAttribute("user", pageUserService.findById(currentUser.getUser().getId()));
+        return "user/editEmail";
+    }
+
+    @PostMapping("/editEmail")
+    public String editUserEmail(@ModelAttribute @Validated({User.addUser.class}) User user, BindingResult result) {
+        if (result.hasErrors()) {
+            return "user/editEmail";
+        }
+        pageUserService.commitEdit(user);
         return "redirect:/user/";
     }
 

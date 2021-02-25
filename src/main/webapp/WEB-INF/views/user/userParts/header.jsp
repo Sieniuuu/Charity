@@ -1,5 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <html>
 <head>
     <title>Warsztat 3 - CoderLab</title>
@@ -44,6 +49,9 @@
             <a class="nav-link" href='<c:url value="/user/editPassword"/>'>
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span class="font-size:3em">EDYTUJ HASŁO </span></a>
+            <a class="nav-link" href='<c:url value="/user/editEmail"/>'>
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span class="font-size:3em">EDYTUJ EMAIL </span></a>
         </li>
     </ul>
     <!-- End of Sidebar --><!-- Content Wrapper -->
@@ -54,7 +62,7 @@
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"></nav>
             <div class="container-fluid">
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="text-left h3 mb-0 text-gray-800">Witaj ${userFullName} </h1>
+                <h1 class="text-left h3 mb-0 text-gray-800">Witaj ${userFullName}</h1>
                 <form action="<c:url value="/logout"/>" method="post" >
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <input class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm text-white-50"

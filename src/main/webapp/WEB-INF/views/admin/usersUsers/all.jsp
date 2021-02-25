@@ -43,14 +43,23 @@
                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                         <a class="dropdown-item" href='<c:url value="/admin/editUser?id=${user.id}"/>'>
                                             EDYTUJ PROFIL </a>
-                                        <a class="dropdown-item" href='<c:url value="/admin/editUserPassword?id=${user.id}"/>'>
+                                        <a class="dropdown-item"
+                                           href='<c:url value="/admin/editUserPassword?id=${user.id}"/>'>
                                             ZMIEŃ HASŁO </a>
-                                        <a class="dropdown-item" href='<c:url value="/admin/block?id=${user.id}"/>'
-                                           onclick="return confirm('Jesteś pewny że chcesz zablokować użytkownika?')">
-                                            ZABLOKUJ </a>
-                                        <a class="dropdown-item" href='<c:url value="/admin/unblock?id=${user.id}"/>'
-                                           onclick="return confirm('Jesteś pewny że chcesz odblokować użytkownika?')">
-                                            ODBLOKUJ </a>
+                                        <c:choose>
+                                            <c:when test="${user.enabled == 1}">
+                                                <a class="dropdown-item"
+                                                   href='<c:url value="/admin/block?id=${user.id}"/>'
+                                                   onclick="return confirm('Jesteś pewny że chcesz zablokować użytkownika?')">
+                                                    ZABLOKUJ </a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a class="dropdown-item"
+                                                   href='<c:url value="/admin/unblock?id=${user.id}"/>'
+                                                   onclick="return confirm('Jesteś pewny że chcesz odblokować użytkownika?')">
+                                                    ODBLOKUJ </a>
+                                            </c:otherwise>
+                                        </c:choose>
                                         <a class="dropdown-item" href='<c:url value="/admin/deleteUser?id=${user.id}"/>'
                                            onclick="return confirm('Jesteś pewny że chcesz usunąć użytkownika?')">
                                             USUŃ </a>

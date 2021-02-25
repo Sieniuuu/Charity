@@ -9,7 +9,7 @@
 
     <!-- Page Heading -->
 
-    </div>
+
         <div class="card-body">
            <form:form method="post" modelAttribute="user">
                <form:hidden path="id"/>
@@ -35,8 +35,7 @@
                 <button type="submit" class="btn btn-primary">Zapisz</button>
            </form:form>
         </div>
-    </div>
-</div>
+
 <%@ include file="../adminParts/footer.jsp" %>
 
 

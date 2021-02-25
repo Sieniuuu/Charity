@@ -62,6 +62,9 @@ public class Donation {
 
     private boolean recived;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate reciveDate;
+
     public Donation() {
     }
 
@@ -166,7 +169,7 @@ public class Donation {
     }
 
     public String deliver() {
-        return String.join(", ", String.valueOf(pickUpDate), String.valueOf(pickUpTime), pickUpComment);
+        return String.join(", ", String.valueOf(pickUpDate), String.valueOf(pickUpTime));
     }
 
     public boolean isRecived() {
@@ -175,5 +178,13 @@ public class Donation {
 
     public void setRecived(boolean recived) {
         this.recived = recived;
+    }
+
+    public LocalDate getReciveDate() {
+        return reciveDate;
+    }
+
+    public void setReciveDate(LocalDate reciveDate) {
+        this.reciveDate = reciveDate;
     }
 }

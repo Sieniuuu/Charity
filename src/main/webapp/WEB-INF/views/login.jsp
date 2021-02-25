@@ -27,7 +27,10 @@
           <input type="password" name="password" placeholder="Hasło" />
           <a href="#" class="btn btn--small btn--without-border reset-password">Przypomnij hasło</a>
         </div>
-        <span class="error-text">${empty error ? " " : error }</span>
+        <span class="error-text">${empty errorLogin ? " " : errorLogin }</span>
+        <span class="error-text">${empty errorActive ? " " : errorActive }</span>
+        <span class="error-text">${empty errorToken ? " " : errorToken }</span>
+        <span class="succes-text">${empty errorNone ? " " : errorNone }</span>
 
         <div class="form-group form-group--buttons">
           <a href="#" class="btn btn--without-border">Załóż konto</a>      

@@ -4,6 +4,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.charity.model.CurrentUser;
 import pl.coderslab.charity.model.Donation;
@@ -22,12 +23,11 @@ public class AdminController {
 
     private final DonationService donationService;
     private final PageUserService pageUserService;
-    private final UserService userService;
 
-    public AdminController(DonationService donationService, PageUserService pageUserService, UserService userService) {
+    public AdminController(DonationService donationService, PageUserService pageUserService) {
         this.donationService = donationService;
         this.pageUserService = pageUserService;
-        this.userService = userService;
+
     }
 
     //// MODELE ----------------------------------------------------------------------------------------------------------------
@@ -60,7 +60,11 @@ public class AdminController {
     }
 
     @GetMapping("/usersAdmin")
-    public String manageAdminsList() {
+    public String manageAdminsList(@RequestParam(required = false) String error, Model model) {
+        if("true".equals(error)) {
+            model.addAttribute("error", "Aktualnie zalogowany administrator nie może zostać usunięty!");
+            return "admin/usersAdmins/all";
+        }
         return "admin/usersAdmins/all";
     }
 
@@ -122,7 +126,10 @@ public class AdminController {
     }
 
     @GetMapping("/delete")
-    public String deleteUserAdmin(@RequestParam Long id) {
+    public String deleteUserAdmin(@RequestParam Long id, Model model, @AuthenticationPrincipal CurrentUser currentUser) {
+        if(pageUserService.adminCheck(currentUser.getUser().getId(), id)) {
+            return "redirect:/admin/usersAdmin?error=true";
+        }
         pageUserService.deleteUser(id);
         return "redirect:/admin/usersAdmin";
     }
@@ -184,6 +191,24 @@ public class AdminController {
     public String deleteUser(@RequestParam Long id) {
         pageUserService.deleteUser(id);
         return "redirect:/admin/usersUser";
+    }
+
+    //// ZARZĄDZANIE UYTKOWNIKAMI - KONIEC
+
+    // -----------------------------------------------------------------------------------------------------------------------------------
+
+    //// ZARZĄDZANIE DOTACJAMI - START
+
+    @GetMapping("/recived")
+    public String recived(@RequestParam Long id) {
+        donationService.recived(id);
+        return "redirect:/admin/";
+    }
+
+    @GetMapping("/unclimed")
+    public String unclimed(@RequestParam Long id) {
+        donationService.unclimed(id);
+        return "redirect:/admin/";
     }
 
 }

@@ -50,10 +50,10 @@
                                         AKTUALIZUJ STATUS
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                        <a class="dropdown-item" href='<c:url value="/donation/recived?id=${donation.id}"/>'
+                                        <a class="dropdown-item" href='<c:url value="/admin/recived?id=${donation.id}"/>'
                                            onclick="return confirm('Jesteś pewny że dar został odebrany?')">
                                             ODEBRANY </a>
-                                        <a class="dropdown-item" href='<c:url value="/donation/unclimed?id=${donation.id}"/>'
+                                        <a class="dropdown-item" href='<c:url value="/admin/unclimed?id=${donation.id}"/>'
                                            onclick="return confirm('Jesteś pewny że dar nie został odebrany?')">
                                             NIEODEBRANY </a>
                                     </div>

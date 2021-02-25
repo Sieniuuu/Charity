@@ -8,9 +8,11 @@ import pl.coderslab.charity.repository.DonationRepository;
 import pl.coderslab.charity.repository.RoleRepository;
 import pl.coderslab.charity.repository.UserRepository;
 
+import javax.mail.MessagingException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PageUserService  {
@@ -20,13 +22,16 @@ public class PageUserService  {
     private final BCryptPasswordEncoder passwordEncoder;
     private final DonationRepository donationRepository;
 
-    public PageUserService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder, DonationRepository donationRepository) {
+
+    public PageUserService(UserRepository userRepository, RoleRepository roleRepository,
+                           BCryptPasswordEncoder passwordEncoder, DonationRepository donationRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.donationRepository = donationRepository;
+
     }
-    
+
     public List<User> findAll() {
         return userRepository.findAll();
     }
@@ -37,7 +42,7 @@ public class PageUserService  {
 
     public void createAdmin (User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setEnabled(1);
+        user.setEnabled(true);
         Role userRole = roleRepository.findByName("ROLE_ADMIN");
         user.setRoles(new HashSet<>(Arrays.asList(userRole)));
         userRepository.save(user);
@@ -58,13 +63,13 @@ public class PageUserService  {
 
     public void blockUser (Long id) {
         User user = userRepository.findById(id).get();
-        user.setEnabled(0);
+        user.setEnabled(false);
         userRepository.save(user);
     }
 
     public void unblockUser (Long id) {
         User user = userRepository.findById(id).get();
-        user.setEnabled(1);
+        user.setEnabled(true);
         userRepository.save(user);
     }
 
@@ -74,6 +79,17 @@ public class PageUserService  {
 
     public void commitPasswordEdit(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+    }
+
+    public boolean adminCheck(Long toDelete, Long id) {
+        return toDelete.equals(id);
+    }
+
+    public void createUser (User user) {
+        user.setEnabled(true);
+        Role userRole = roleRepository.findByName("ROLE_USER");
+        user.setRoles(new HashSet<>(Arrays.asList(userRole)));
         userRepository.save(user);
     }
 

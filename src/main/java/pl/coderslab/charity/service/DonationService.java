@@ -35,6 +35,8 @@ public class DonationService {
         return donationRepository.findAll();
     }
 
+    public Donation findById(Long id) { return donationRepository.findById(id).get(); }
+
     public List<Donation> findAllByUserRevers(User user){
         return donationRepository.findByUserOrderByIdDesc(user);
     }
@@ -57,6 +59,7 @@ public class DonationService {
     public void recived(Long id) {
         Donation donation = donationRepository.findById(id).get();
         donation.setRecived(true);
+        donation.setReciveDate(LocalDate.now());
         donationRepository.save(donation);
     }
 

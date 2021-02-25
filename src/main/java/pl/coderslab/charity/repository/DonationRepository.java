@@ -25,4 +25,12 @@ public interface DonationRepository extends JpaRepository <Donation, Long> {
     List<Donation> findByUser (User user);
 
     List<Donation> findByUserOrderByIdDesc (User user);
+
+    @Query("SELECT d FROM Donation d WHERE d.user = :user ORDER BY d.recived DESC")
+    List<Donation> findDonationByUserOrderByRecivedAsc(@Param("user") User user);
+
+    @Query("SELECT d FROM Donation d WHERE d.user = :user " +
+            "AND d.recived = :recived ORDER BY d.pickUpDate DESC")
+    List<Donation> findDonationByUserAAndRecivedOrderByReciveDateDesc(@Param("user") User user,
+    @Param("recived") boolean recived);
 }

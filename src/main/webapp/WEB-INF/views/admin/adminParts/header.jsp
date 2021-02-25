@@ -57,7 +57,7 @@
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"></nav>
             <div class="container-fluid">
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="text-left h3 mb-0 text-gray-800">Witaj ${adminFullName} </h1>
+                <h1 class="text-left h3 mb-0 text-gray-800">Witaj ${userFullName} </h1>
                 <form action="<c:url value="/logout"/>" method="post" >
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <input class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm text-white-50"
