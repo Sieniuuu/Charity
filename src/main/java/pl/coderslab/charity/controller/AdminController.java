@@ -97,11 +97,11 @@ public class AdminController {
     }
 
     @PostMapping("/edit")
-    public String editUserAdmin(@ModelAttribute @Valid User user, BindingResult result) {
+    public String editUserAdmin(@ModelAttribute @Validated({User.editUserDetails.class}) User user, BindingResult result) {
         if (result.hasErrors()) {
             return "admin/usersAdmins/edit";
         }
-        pageUserService.commitEdit(user);
+        pageUserService.commitEditDetails(user);
         return "redirect:/admin/usersAdmin";
     }
 
@@ -112,7 +112,7 @@ public class AdminController {
     }
 
     @PostMapping("/editPassword")
-    public String editPasswordAdmin(@ModelAttribute @Valid User user, BindingResult result,
+    public String editPasswordAdmin(@ModelAttribute @Validated({User.editUserPassword.class}) User user, BindingResult result,
                                     @RequestParam String confirmPassword, Model model) {
         if(result.hasErrors()){
             return "admin/usersAdmins/editPassword";
@@ -120,8 +120,24 @@ public class AdminController {
             model.addAttribute("error", " Podane hasła nie są identyczne! ");
             return "admin/usersAdmins/editPassword";
         } else {
-            pageUserService.commitPasswordEdit(user);
+            pageUserService.commitEditPassword(user, confirmPassword);
         }
+        return "redirect:/admin/usersAdmin";
+    }
+
+    @GetMapping("/editEmail")
+    public String editAdminEmailForm(@RequestParam Long id, Model model) {
+        model.addAttribute("user", pageUserService.findById(id));
+        return "admin/usersAdmins/editEmail";
+    }
+
+    @PostMapping("/editEmail")
+    public String ediAdminEmail(@ModelAttribute @Validated({User.editUserEmail.class}) User user,
+                                BindingResult result) {
+        if (result.hasErrors()) {
+            return "admin/usersAdmins/editEmail";
+        }
+        pageUserService.commitEditEmail(user);
         return "redirect:/admin/usersAdmin";
     }
 
@@ -143,15 +159,32 @@ public class AdminController {
     @GetMapping("/editUser")
     public String editUserForm(@RequestParam Long id, Model model) {
         model.addAttribute("user", pageUserService.findById(id));
-        return "admin/usersAdmins/edit";
+        return "admin/usersUsers/edit";
     }
 
     @PostMapping("/editUser")
-    public String editUserUser(@ModelAttribute @Valid User user, BindingResult result) {
+    public String editUserUser(@ModelAttribute @Validated({User.editUserDetails.class}) User user,
+                               BindingResult result) {
         if (result.hasErrors()) {
             return "admin/usersUsers/edit";
         }
-        pageUserService.commitEdit(user);
+        pageUserService.commitEditDetails(user);
+        return "redirect:/admin/usersUser";
+    }
+
+    @GetMapping("/editUserEmail")
+    public String editUserEmailForm(@RequestParam Long id, Model model) {
+        model.addAttribute("user", pageUserService.findById(id));
+        return "admin/usersUsers/editEmail";
+    }
+
+    @PostMapping("/editUserEmail")
+    public String editUserEmail(@ModelAttribute @Validated({User.editUserEmail.class}) User user,
+                                BindingResult result) {
+        if (result.hasErrors()) {
+            return "admin/usersUsers/editEmail";
+        }
+        pageUserService.commitEditEmail(user);
         return "redirect:/admin/usersUser";
     }
 
@@ -162,15 +195,15 @@ public class AdminController {
     }
 
     @PostMapping("/editUserPassword")
-    public String editPasswordUser(@ModelAttribute @Valid User user, BindingResult result,
-                                    @RequestParam String confirmPassword, Model model) {
+    public String editPasswordUser(@ModelAttribute @Validated({User.editUserPassword.class}) User user,
+                                   BindingResult result, @RequestParam String confirmPassword, Model model) {
         if(result.hasErrors()){
             return "admin/usersUsers/editPassword";
         } else if (!confirmPassword.equals(user.getPassword())) {
             model.addAttribute("error", " Podane hasła nie są identyczne! ");
             return "admin/usersUsers/editPassword";
         } else {
-            pageUserService.commitPasswordEdit(user);
+            pageUserService.commitEditPassword(user, confirmPassword);
         }
         return "redirect:/admin/usersUser";
     }

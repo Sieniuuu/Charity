@@ -15,27 +15,32 @@ public class User {
 
     public interface addUser { };
 
-    public interface editUser { };
+    public interface editUserDetails { };
+
+    public interface editUserEmail { };
+
+    public interface editUserPassword { };
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Proszę uzupełnić imię!", groups = {addUser.class, editUser.class})
+    @NotBlank(message = "Proszę uzupełnić imię!", groups = {addUser.class, editUserDetails.class})
     private String firstName;
 
-    @NotBlank(message = "Proszę uzupełnić nazwisko!", groups = {addUser.class, editUser.class})
+    @NotBlank(message = "Proszę uzupełnić nazwisko!", groups = {addUser.class, editUserDetails.class})
     private String lastName;
 
-    @NotBlank(message = "Proszę uzupełnić email!", groups = {addUser.class, editUser.class})
-    @Email(message = "Proszę wpisać maila w formacie 'sample@sample.pl'", groups = {addUser.class, editUser.class})
-    @EmailValidation(message = "Podany mail jest już zajęty, proszę wybrać inny!", groups = {addUser.class})
+    @NotBlank(message = "Proszę uzupełnić email!", groups = {addUser.class, editUserEmail.class})
+    @Email(message = "Proszę wpisać maila w formacie 'sample@sample.pl'", groups = {addUser.class, editUserEmail.class})
+    @EmailValidation(message = "Podany mail jest już zajęty, proszę wybrać inny!", groups = {addUser.class, editUserEmail.class})
     private String email;
 
-    @NotBlank (message = "Proszę uzupełnić hasło!" , groups = {addUser.class, editUser.class})
+    @NotBlank (message = "Proszę uzupełnić hasło!" , groups = {addUser.class, editUserPassword.class})
     @Pattern(regexp = "(^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$)",
             message = "Hasło musi zawierać: jedną cyfer, jedną dużą i jedną małą literę oraz znak specialny ",
-            groups = {addUser.class, editUser.class})
+            groups = {addUser.class, editUserPassword.class})
     private String password;
 
     @OneToMany(mappedBy = "user")

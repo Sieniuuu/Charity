@@ -4,7 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ include file="userParts/header.jsp" %>
+<%@ include file="../adminParts/header.jsp" %>
+
 
 
 <!-- Page Heading -->
@@ -21,7 +22,7 @@
     </form:form>
 </div>
 
-<%@ include file="userParts/footer.jsp" %>
+<%@ include file="../adminParts/footer.jsp" %>
 
 
 

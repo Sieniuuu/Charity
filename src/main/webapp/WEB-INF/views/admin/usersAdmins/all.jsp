@@ -34,12 +34,20 @@
                                         AKCJA
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                        <a class="dropdown-item" href='<c:url value="/admin/edit?id=${user.id}"/>'> EDYTUJ PROFIL</a>
-                                        <a class="dropdown-item" href='<c:url value="/admin/editPassword?id=${user.id}"/>'> ZMIEŃ HASŁO </a>
-                                        <a class="dropdown-item" href='<c:url value="/admin/delete?id=${user.id}"/>'
-                                        onclick="return confirm('Jesteś pewny że chcesz usunąć tego administratora?')"> USUŃ </a>
+                                        <a class="dropdown-item" href='<c:url value="/admin/edit?id=${user.id}"/>'>
+                                            ZMIEŃ DANE</a>
+                                        <a class="dropdown-item"
+                                           href='<c:url value="/admin/editPassword?id=${user.id}"/>'> ZMIEŃ HASŁO </a>
+                                        <a class="dropdown-item"
+                                           href='<c:url value="/admin/editEmail?id=${user.id}"/>'> ZMIEŃ EMAIL </a>
                                     </div>
                                 </div>
+                                <a href='<c:url value="/admin/delete?id=${user.id}"/>'>
+                                    <button type="button" class="btn btn-primary"
+                                            onclick="return confirm('Jesteś pewny że chcesz usunąć tego administratora?')">
+                                        USUŃ
+                                    </button>
+                                </a>
                             </td>
                         </tr>
                     </c:forEach>

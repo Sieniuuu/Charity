@@ -11232,7 +11232,7 @@ body.sidebar-toggled footer.sticky-footer {
 .error-text {
   color: #cc0033;
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: bold;
   line-height: 20px;
   text-shadow: 1px 1px rgba(250,250,250,.3);
@@ -11241,7 +11241,7 @@ body.sidebar-toggled footer.sticky-footer {
 .succes-text {
   color: #2ccc01;
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: bold;
   line-height: 20px;
   text-shadow: 1px 1px rgba(250,250,250,.3);

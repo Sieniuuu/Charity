@@ -27,7 +27,7 @@
                             <td>${user.email}</td>
 
                             <c:choose>
-                                <c:when test="${user.enabled == 1}">
+                                <c:when test="${user.enabled == true}">
                                     <td> AKTYWNY</td>
                                 </c:when>
                                 <c:otherwise>
@@ -38,16 +38,26 @@
                                 <div class="btn-group" role="group">
                                     <button id="btnGroupDrop3" type="button" class="btn btn-success dropdown-toggle"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        AKCJA
+                                        EDYTUJ
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                         <a class="dropdown-item" href='<c:url value="/admin/editUser?id=${user.id}"/>'>
-                                            EDYTUJ PROFIL </a>
-                                        <a class="dropdown-item"
-                                           href='<c:url value="/admin/editUserPassword?id=${user.id}"/>'>
+                                            ZMIEŃ DANE </a>
+                                        <a class="dropdown-item" href='<c:url value="/admin/editUserPassword?id=${user.id}"/>'>
                                             ZMIEŃ HASŁO </a>
+                                        <a class="dropdown-item" href='<c:url value="/admin/editUserEmail?id=${user.id}"/>'>
+                                            ZMIEŃ EMAIL </a>
+                                    </div>
+                                </div>
+
+                                <div class="btn-group" role="group">
+                                    <button id="btnGroupDrop4" type="button" class="btn btn-secondary dropdown-toggle"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        AKTUALIZUJ
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                         <c:choose>
-                                            <c:when test="${user.enabled == 1}">
+                                            <c:when test="${user.enabled == true}">
                                                 <a class="dropdown-item"
                                                    href='<c:url value="/admin/block?id=${user.id}"/>'
                                                    onclick="return confirm('Jesteś pewny że chcesz zablokować użytkownika?')">

@@ -14,12 +14,6 @@
 <div class="card-body">
     <form:form method="post" modelAttribute="user">
         <form:hidden path="id"/>
-        <form:hidden path="email"/>
-        <form:hidden path="firstName"/>
-        <form:hidden path="lastName"/>
-        <form:hidden path="donations"/>
-        <form:hidden path="enabled"/>
-        <form:hidden path="roles"/>
         <div class="form-group">
             <form:password path="password" placeholder="Hasło" class="form-control"/> <br>
             <span class="error-text"><form:errors path="password"/></span>

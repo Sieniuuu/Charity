@@ -25,7 +25,7 @@
         </div>
         <div class="form-group">
           <input type="password" name="password" placeholder="Hasło" />
-          <a href="#" class="btn btn--small btn--without-border reset-password">Przypomnij hasło</a>
+          <a href="<c:url value="/login/passwordReset"/>" class="btn btn--small btn--without-border reset-password">Przypomnij hasło</a>
         </div>
         <span class="error-text">${empty errorLogin ? " " : errorLogin }</span>
         <span class="error-text">${empty errorActive ? " " : errorActive }</span>
@@ -33,7 +33,7 @@
         <span class="succes-text">${empty errorNone ? " " : errorNone }</span>
 
         <div class="form-group form-group--buttons">
-          <a href="#" class="btn btn--without-border">Załóż konto</a>      
+          <a href='<c:url value="/register"/>' class="btn btn--without-border">Załóż konto</a>
           <button class="btn" type="submit">Zaloguj się</button>
         </div>
       </form>

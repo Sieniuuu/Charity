@@ -46,12 +46,11 @@ public class UserController {
     }
 
     @PostMapping("/editDetails")
-    public String editUserDetails(@ModelAttribute @Validated({User.editUser.class}) User user, BindingResult result, @RequestParam String email,
-                                  @AuthenticationPrincipal CurrentUser currentUser, Model model) {
+    public String editUserDetails(@ModelAttribute @Validated({User.editUserDetails.class}) User user, BindingResult result) {
         if (result.hasErrors()) {
             return "user/edit";
         }
-        pageUserService.commitEdit(user);
+        pageUserService.commitEditDetails(user);
         return "redirect:/user/";
     }
 
@@ -62,7 +61,7 @@ public class UserController {
     }
 
     @PostMapping("/editPassword")
-    public String createDonation(@ModelAttribute @Validated({User.editUser.class}) User user, BindingResult result,
+    public String createDonation(@ModelAttribute @Validated({User.editUserPassword.class}) User user, BindingResult result,
                                  @RequestParam String confirmPassword, Model model){
         if(result.hasErrors()){
             return "user/editPassword";
@@ -70,7 +69,7 @@ public class UserController {
             model.addAttribute("error", " Podane hasła nie są identyczne! ");
             return "user/editPassword";
         } else {
-            pageUserService.commitPasswordEdit(user);
+            pageUserService.commitEditPassword(user, confirmPassword);
         }
         return "redirect:/user/";
     }
@@ -82,11 +81,11 @@ public class UserController {
     }
 
     @PostMapping("/editEmail")
-    public String editUserEmail(@ModelAttribute @Validated({User.addUser.class}) User user, BindingResult result) {
+    public String editUserEmail(@ModelAttribute @Validated({User.editUserEmail.class}) User user, BindingResult result) {
         if (result.hasErrors()) {
             return "user/editEmail";
         }
-        pageUserService.commitEdit(user);
+        pageUserService.commitEditEmail(user);
         return "redirect:/user/";
     }
 

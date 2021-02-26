@@ -47,9 +47,9 @@ public class RegisterController {
             return "register";
         } else {
             userService.saveUser(user);
-            tokenService.sendToken(user);
+            tokenService.sendActiveToken(user);
         }
-        return "redirect:/login";
+        return "redirect:/login?error=process";
     }
 
 

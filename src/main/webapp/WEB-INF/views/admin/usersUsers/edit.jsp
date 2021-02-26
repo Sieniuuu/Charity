@@ -9,14 +9,6 @@
 <div class="card-body">
     <form:form method="post" modelAttribute="user">
         <form:hidden path="id"/>
-        <form:hidden path="donations"/>
-        <form:hidden path="enabled"/>
-        <form:hidden path="roles"/>
-        <form:hidden path="password"/>
-        <div class="form-group">
-            Adres email: <form:input path="email" class="form-control" placeholder="Email"/>
-            <span class="error-text"><form:errors path="email"/></span>
-        </div>
         <div class="form-group">
             Imię: <form:input path="firstName" class="form-control" placeholder="Imię"/>
             <span class="error-text"><form:errors path="firstName"/></span>
@@ -25,7 +17,6 @@
             Nazwisko: <form:input path="lastName" class="form-control" placeholder="Nazwisko"/>
             <label><span class="error-text"><form:errors path="lastName"/></span></label>
         </div>
-
         <button type="submit" class="btn btn-primary">Zapisz</button>
     </form:form>
 </div>

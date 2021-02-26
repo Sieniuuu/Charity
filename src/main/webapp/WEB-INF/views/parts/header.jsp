@@ -6,6 +6,15 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+
+    <script>
+        $("#oCoChodziButton").click(function() {
+            $('html,body').animate({
+                    scrollTop: $("#oCoChodzi").offset().top},
+                'slow');
+        });
+    </script>
+
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
@@ -20,7 +29,12 @@
             <li class="logged-user">
                 Witaj <sec:authentication property="principal.username"/>
                 <ul class="dropdown">
+                    <sec:authorize access="hasRole('ADMIN')">
                     <li><a href="<c:url value="/admin/"/>" class="btn btn--small btn--without-border" >Panel zarządzania</a></li>
+                    </sec:authorize>
+                    <sec:authorize access="hasRole('USER')">
+                        <li><a href="<c:url value="/user/"/>" class="btn btn--small btn--without-border" >Panel zarządzania</a></li>
+                    </sec:authorize>
                     <li>
                         <form action="<c:url value="/logout"/>" method="post" >
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -40,11 +54,14 @@
     </sec:authorize>
 
     <ul>
-        <li><a href="/" class="btn btn--without-border active">Start</a></li>
-        <li><a href="/#steps" class="btn btn--without-border">O co chodzi?</a></li>
-        <li><a href="/#about-us" class="btn btn--without-border">O nas</a></li>
-        <li><a href="/#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
+        <li><button class="btn btn--without-border active">Start</button></li>
+        <li><button class="btn btn--without-border" id="oCoChodziButton"> O co chodzi?</button></li>
+        <li><button class="btn btn--without-border"
+               onclick="smoothScroll(document.getElementById('oNas'))">O nas</button></li>
+        <li><button class="btn btn--without-border"
+               onclick="smoothScroll(document.getElementById('help'))">Fundacje i organizacje</button></li>
         <li><a href='<c:url value="/donation/form"/>' class="btn btn--without-border">Przekaż dary</a></li>
-        <li><a href="/#contact" class="btn btn--without-border">Kontakt</a></li>
+        <li><button class="btn btn--without-border"
+               onclick="smoothScroll(document.getElementById('contact'))">Kontakt</button></li>
     </ul>
 </nav>

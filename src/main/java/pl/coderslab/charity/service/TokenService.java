@@ -7,6 +7,7 @@ import pl.coderslab.charity.model.User;
 import pl.coderslab.charity.repository.TokenRepository;
 
 import javax.mail.MessagingException;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -20,7 +21,28 @@ public class TokenService {
         this.mailService = mailService;
     }
 
-    public void sendToken(User user) {
+    public Optional<Token> findByValue(String value) {
+        return tokenRepository.findByValue(value);
+    }
+
+    public void sendActiveToken(User user) {
+        String subject = "Link aktywacyjny do portalu CharityDonation";
+        String urlContent = " http://localhost:8080/register/token?value=";
+        String msgContent = "Link aktywacyjny do naszego portalu! Kliknij w niego ";
+
+        sendToken(user, urlContent, msgContent, subject);
+    }
+
+    public void sendPasswordResetToken(User user) {
+        String subject = "Link do formularza restartującego hasło CharityDonation";
+        String urlContent = " http://localhost:8080/login/changePassword?value=";
+        String msgContent = "Link do formularza resetującego konto! Kliknij w niego ";
+
+        sendToken(user, urlContent, msgContent, subject);
+    }
+
+
+    public void sendToken(User user, String urlContent, String msgContent, String subject) {
         String value = UUID.randomUUID().toString();
         Token token = new Token();
         token.setValue(value);
@@ -28,15 +50,18 @@ public class TokenService {
         token.setExpiryDate(30);
         tokenRepository.save(token);
 
-        String url = " http://localhost:8080/register/token?value=" + value;
-        String msg = "Link aktywacyjny do naszego portalu! Kliknij w niego ";
+        String url = urlContent + value;
+        String msg = msgContent;
 
         try {
-            mailService.sendMail(user.getEmail(), "Link aktywacyjny do portalu CharityDonation",
-                    msg + url, false);
+            mailService.sendMail(user.getEmail(), subject,msg + url, false);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
     }
+
+
+
+
 
 }

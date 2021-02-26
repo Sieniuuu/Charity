@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class PageUserService  {
+public class PageUserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -36,11 +36,15 @@ public class PageUserService  {
         return userRepository.findAll();
     }
 
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
     public List<User> findByRole(String name) {
         return userRepository.findUsersByRoles(roleRepository.findByName(name));
     }
 
-    public void createAdmin (User user) {
+    public void createAdmin(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
         Role userRole = roleRepository.findByName("ROLE_ADMIN");
@@ -48,11 +52,11 @@ public class PageUserService  {
         userRepository.save(user);
     }
 
-    public User findById (Long id) {
+    public User findById(Long id) {
         return userRepository.findById(id).get();
     }
 
-    public void deleteUser (Long id) {
+    public void deleteUser(Long id) {
         User user = userRepository.findById(id).get();
         donationRepository.findByUser(user).forEach(donation -> {
             donation.setUser(null);
@@ -61,37 +65,47 @@ public class PageUserService  {
         userRepository.delete(user);
     }
 
-    public void blockUser (Long id) {
+    public void blockUser(Long id) {
         User user = userRepository.findById(id).get();
         user.setEnabled(false);
         userRepository.save(user);
     }
 
-    public void unblockUser (Long id) {
+    public void unblockUser(Long id) {
         User user = userRepository.findById(id).get();
         user.setEnabled(true);
         userRepository.save(user);
     }
 
-    public void commitEdit(User user) {
-        userRepository.save(user);
+
+    public void commitEditDetails(User user) {
+        User editedUser = findById(user.getId());
+        editedUser.setFirstName(user.getFirstName());
+        editedUser.setLastName(user.getLastName());
+        userRepository.save(editedUser);
     }
 
-    public void commitPasswordEdit(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+    public void commitEditEmail(User user) {
+        User editedUser = findById(user.getId());
+        editedUser.setEmail(user.getEmail());
+        userRepository.save(editedUser);
+    }
+
+    public void commitEditPassword(User user, String password) {
+        User editedUser = findById(user.getId());
+        editedUser.setPassword(passwordEncoder.encode(password));
+        userRepository.save(editedUser);
     }
 
     public boolean adminCheck(Long toDelete, Long id) {
         return toDelete.equals(id);
     }
 
-    public void createUser (User user) {
+    public void createUser(User user) {
         user.setEnabled(true);
         Role userRole = roleRepository.findByName("ROLE_USER");
         user.setRoles(new HashSet<>(Arrays.asList(userRole)));
         userRepository.save(user);
     }
-
 
 }

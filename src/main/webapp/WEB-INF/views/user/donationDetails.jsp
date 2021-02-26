@@ -49,7 +49,14 @@
                     </tr>
                     <tr>
                         <th>STATUS:</th>
-                        <td>${donation.recived}</td>
+                        <c:choose>
+                            <c:when test="${donation.recived == true}">
+                                <td>ODEBRANY</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>NIEODEBRANY</td>
+                            </c:otherwise>
+                        </c:choose>
                     </tr>
                     <tr>
                         <th>KONTAKT:</th>

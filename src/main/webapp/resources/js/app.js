@@ -231,13 +231,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 pickUpTimeSummary.innerText = pickUpTime;
                 pickUpCommentSummary.innerText = pickUpComment;
 
-
-
-
-
             }
 
-            // inputsSummary();
+
             lastButton.addEventListener("click", inputsSummary);
         }
 
@@ -246,5 +242,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (form !== null) {
         new FormSteps(form);
     }
+
+
 });
 
