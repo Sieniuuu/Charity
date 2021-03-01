@@ -6,12 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.charity.email.MailService;
 import pl.coderslab.charity.model.*;
 import pl.coderslab.charity.service.CategoryService;
 import pl.coderslab.charity.service.DonationService;
 import pl.coderslab.charity.service.InstitutionService;
 
-import javax.validation.Valid;
+import javax.mail.MessagingException;
 import java.util.List;
 
 @Controller
@@ -21,12 +22,14 @@ public class DonationController {
     private CategoryService categoryService;
     private InstitutionService institutionService;
     private DonationService donationService;
+    private MailService mailService;
 
     public DonationController(CategoryService categoryService, InstitutionService institutionService,
-                              DonationService donationService) {
+                              DonationService donationService, MailService mailService) {
         this.categoryService = categoryService;
         this.institutionService = institutionService;
         this.donationService = donationService;
+        this.mailService = mailService;
     }
 
     @ModelAttribute("userFullName")
@@ -49,13 +52,13 @@ public class DonationController {
 
     //// FORM BEZ ZALOGOWANIA ------------------------------------------------------------------------------------------
 
-    @GetMapping("/form")
+    @GetMapping("/formDonate")
     public String prepCreateDonation(Model model) {
         model.addAttribute("donation", new Donation());
         return "formDonation";
     }
 
-    @PostMapping("/form")
+    @PostMapping("/formDonate")
     public String createDonation(@ModelAttribute @Validated({Donation.addDonation.class}) Donation donation,
                                  BindingResult result){
         if(result.hasErrors()){

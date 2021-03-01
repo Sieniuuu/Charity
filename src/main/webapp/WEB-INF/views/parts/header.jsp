@@ -2,18 +2,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-
-    <script>
-        $("#oCoChodziButton").click(function() {
-            $('html,body').animate({
-                    scrollTop: $("#oCoChodzi").offset().top},
-                'slow');
-        });
-    </script>
 
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -54,14 +47,27 @@
     </sec:authorize>
 
     <ul>
-        <li><button class="btn btn--without-border active">Start</button></li>
-        <li><button class="btn btn--without-border" id="oCoChodziButton"> O co chodzi?</button></li>
-        <li><button class="btn btn--without-border"
-               onclick="smoothScroll(document.getElementById('oNas'))">O nas</button></li>
-        <li><button class="btn btn--without-border"
-               onclick="smoothScroll(document.getElementById('help'))">Fundacje i organizacje</button></li>
-        <li><a href='<c:url value="/donation/form"/>' class="btn btn--without-border">Przekaż dary</a></li>
-        <li><button class="btn btn--without-border"
+        <li><a href='/' class="btn btn--without-border active">Start</a></li>
+        <c:choose>
+            <c:when test="${pageContext.request.requestURI.length() > 24}">
+                <hr>
+            </c:when>
+            <c:otherwise>
+                <li><button type="button" class="btn btn--without-border"
+                            onclick="smoothScroll(document.getElementById('oCoChodzi'))">O co chodzi?</button></li>
+                <li><button type="button" class="btn btn--without-border"
+                            onclick="smoothScroll(document.getElementById('oNas'))">O nas</button></li>
+                <li><button type="button" class="btn btn--without-border"
+                            onclick="smoothScroll(document.getElementById('help'))">Fundacje i organizacje</button></li>
+            </c:otherwise>
+        </c:choose>
+        <sec:authorize access="!isAuthenticated()">
+            <li><a href='<c:url value="/donation/formDonate"/>' class="btn btn--without-border">Przekaż dary</a></li>
+        </sec:authorize>
+        <sec:authorize access="isAuthenticated()">
+        <li><a href='<c:url value="/donation/addDonate"/>' class="btn btn--without-border">Przekaż dary</a></li>
+        </sec:authorize>
+        <li><button type="button" class="btn btn--without-border"
                onclick="smoothScroll(document.getElementById('contact'))">Kontakt</button></li>
     </ul>
 </nav>

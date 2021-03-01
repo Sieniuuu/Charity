@@ -7,6 +7,7 @@ import pl.coderslab.charity.model.User;
 import pl.coderslab.charity.repository.TokenRepository;
 
 import javax.mail.MessagingException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 

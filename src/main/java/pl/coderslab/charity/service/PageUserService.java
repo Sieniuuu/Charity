@@ -6,13 +6,12 @@ import pl.coderslab.charity.model.Role;
 import pl.coderslab.charity.model.User;
 import pl.coderslab.charity.repository.DonationRepository;
 import pl.coderslab.charity.repository.RoleRepository;
+import pl.coderslab.charity.repository.TokenRepository;
 import pl.coderslab.charity.repository.UserRepository;
 
-import javax.mail.MessagingException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class PageUserService {
@@ -21,15 +20,18 @@ public class PageUserService {
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final DonationRepository donationRepository;
+    private final TokenRepository tokenRepository;
 
 
     public PageUserService(UserRepository userRepository, RoleRepository roleRepository,
-                           BCryptPasswordEncoder passwordEncoder, DonationRepository donationRepository) {
+                           BCryptPasswordEncoder passwordEncoder, DonationRepository
+                                   donationRepository, TokenRepository tokenRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.donationRepository = donationRepository;
 
+        this.tokenRepository = tokenRepository;
     }
 
     public List<User> findAll() {
@@ -62,6 +64,7 @@ public class PageUserService {
             donation.setUser(null);
             donationRepository.save(donation);
         });
+        tokenRepository.findAllByUserId(id).forEach(tokenRepository::delete);
         userRepository.delete(user);
     }
 

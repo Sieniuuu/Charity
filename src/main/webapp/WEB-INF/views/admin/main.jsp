@@ -34,7 +34,7 @@
                             <td>${empty donation.institution.name ? "BRAK" : donation.institution.name }</td>
                             <td>${donation.fullAddress}</td>
                             <td>${donation.deliver()}</td>
-                            <td>${empty donation.user ? "Anonimowy" : " "}<br></td>
+                            <td>${empty donation.user.fullName ? "Anonimowy" : donation.user.fullName}<br></td>
                             <c:choose>
                             <c:when test="${donation.recived == true}">
                             <td> ODEBRANY </td>

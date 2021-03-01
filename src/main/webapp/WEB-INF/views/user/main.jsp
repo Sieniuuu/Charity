@@ -9,7 +9,7 @@
             <label>
                 <b>Sortuj po:</b><br>
                 <select name="searchMode" class="form-control">
-                    <option value="----" selected="selected" > ---- </option>
+                    <option value="" selected="selected" > ---- </option>
                     <option value="id" class="form-control"> DATA UTWORZENIA </option>
                     <option value="pickUpDate" class="form-control"> DATA ODBIORU </option>
                     <option value="status" class="form-control"> STATUS </option>

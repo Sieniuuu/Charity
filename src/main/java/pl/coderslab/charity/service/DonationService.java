@@ -24,10 +24,16 @@ public class DonationService {
     }
 
     public int sumQuantity() {
+        if(findAll().size() == 0) {
+            return 0;
+        }
         return donationRepository.sumDonationsQuantity();
     }
 
     public int countAll() {
+        if(findAll().size() == 0) {
+            return 0;
+        }
         return donationRepository.findAll().size();
     }
 

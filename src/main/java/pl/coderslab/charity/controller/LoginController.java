@@ -29,7 +29,7 @@ public class LoginController {
     @GetMapping
     public String prepRegistry(@RequestParam(required = false) String error, Model model) {
         if (StringUtils.isEmpty(error)) {
-            return "login";
+            return "loginPage";
         }
         switch (error) {
             case "true":
@@ -49,7 +49,7 @@ public class LoginController {
                 model.addAttribute("errorNone", "Hasło zostało zmienione, możesz się zalogować!");
                 break;
         }
-        return "login";
+        return "loginPage";
     }
 
 
