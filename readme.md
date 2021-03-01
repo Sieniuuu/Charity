@@ -26,4 +26,7 @@ managing users (edit, activate / deactivate, deletion)
 - Bootstrap
 - MySQL
 
+# Contact:
 
+Mail: asienkowski93@gmail.com
+Linkedin: www.linkedin.com/in/sienkowskiartur
