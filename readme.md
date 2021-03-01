@@ -1,12 +1,29 @@
-<img alt="Logo" src="http://coderslab.pl/svg/logo-coderslab.svg" width="400">
+# About:
+Project purpose: to ease and simplify the process of giving up your stuff to charities. 
+
+Main features:
+*FOR USERS:
+user account creation and password reminder (form sending the activation link to user email)
+donation form
+managing user donation
+changing profile details
+changing password
+
+*FOR ADMINS:
+managing charities
+managing admins (edit, activate / deactivate, deletion)
+managing users (edit, activate / deactivate, deletion)
+
+# Technologies:
+
+- Java EE
+- Spring Boot
+- Spring Data
+- Spring Hibernate
+- Spring Security
+- JSTL
+- JSP
+- Bootstrap
+- MySQL
 
 
-Przed przystąpieniem do pracy  przeczytaj poniższe wskazówki.
-## Jak zacząć?
-
-1. Zaimportuj projekt jako projekt `Maven`, wg poniższych wskazówek:
-
-	* W `IntelliJ` wybieramy: `File –> New –> Project from Existing Sources...`
-	* Wskazujemy lokalizację katalogu ze sklonowanym projektem i zatwierdzamy.
-	* Następnie w nowym oknie wybieramy: `Import project from external model` i wskazujemy `Maven`
-	* Wybieramy kolejno opcje: `Next –> Next –> Next –> Finish`
