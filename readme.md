@@ -21,6 +21,7 @@ managing users (edit, activate / deactivate, deletion)
 - Spring Data
 - Spring Hibernate
 - Spring Security
+- JavaScript
 - JSTL
 - JSP
 - Bootstrap
